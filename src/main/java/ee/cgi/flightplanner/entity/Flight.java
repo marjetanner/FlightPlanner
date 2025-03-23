@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @Entity
 @Getter
 @Setter
@@ -23,7 +27,7 @@ public class Flight {
     private Long id;
 
     private String destination;
-    private String departureDate;
-    private String flightTime;
+    private LocalDate departureDate;
+    private LocalTime flightTime;
     private double price;
 }

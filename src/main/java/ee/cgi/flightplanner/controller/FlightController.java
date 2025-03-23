@@ -6,6 +6,8 @@ import ee.cgi.flightplanner.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -31,8 +33,8 @@ public class FlightController {
     @GetMapping("/search")
     public List<Flight> getFilteredFlights(
             @RequestParam(required = false) String destination,
-            @RequestParam(required = false) String departureDate,
-            @RequestParam(required = false) String flightTime,
+            @RequestParam(required = false) LocalDate departureDate,
+            @RequestParam(required = false) LocalTime flightTime,
             @RequestParam(required = false) Double price) {
         return flightService.getFilteredFlights(destination, departureDate, flightTime, price);
     }

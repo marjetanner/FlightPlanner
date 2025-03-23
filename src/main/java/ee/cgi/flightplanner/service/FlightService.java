@@ -6,6 +6,8 @@ import ee.cgi.flightplanner.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -18,7 +20,7 @@ public class FlightService {
         return flightRepository.findAll();
     }
 
-    public List<Flight> getFilteredFlights(String destination, String departureDate, String flightTime, Double price) {
+    public List<Flight> getFilteredFlights(String destination, LocalDate departureDate, LocalTime flightTime, Double price) {
         if (destination == null && departureDate == null && flightTime == null && price == null) {
             return flightRepository.findAll();
         }
@@ -36,7 +38,7 @@ public class FlightService {
             return flightRepository.findByDestinationIgnoreCaseAndDepartureDateAndFlightTime(destination, departureDate, flightTime);
         }
 
-        if (destination != null && departureDate != null && flightTime != null && price != null) {
+        if (destination != null && departureDate != null && flightTime != null) {
             return flightRepository.findByDestinationIgnoreCaseAndDepartureDateAndFlightTimeAndPriceLessThan(destination, departureDate, flightTime, price);
         }
 

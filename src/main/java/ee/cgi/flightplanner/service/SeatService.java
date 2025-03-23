@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 @Service
 public class SeatService {
 
-    public List<String> recommendSeats(Long flightId, int passengerCount, Boolean windowSeat, Boolean extraLegroom, Boolean nearExit) {
+    public List<String> recommendSeats(Long flightId, int passengerCount, Boolean windowSeat,
+                                       Boolean extraLegroom, Boolean nearExit) {
         // Loome kõik võimalikud istekohad
         List<String> allSeats = generateSeats();
 
@@ -51,7 +52,8 @@ public class SeatService {
         return occupied;
     }
 
-    private List<String> filterSeats(List<String> availableSeats, int passengerCount, Boolean windowSeat, Boolean extraLegroom, Boolean nearExit) {
+    private List<String> filterSeats(List<String> availableSeats, int passengerCount,
+                                     Boolean windowSeat, Boolean extraLegroom, Boolean nearExit) {
         List<String> filteredSeats = new ArrayList<>(availableSeats);
 
         if (windowSeat != null && windowSeat) {

@@ -4,22 +4,24 @@ import ee.cgi.flightplanner.entity.Flight;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     List<Flight> findByDestinationIgnoreCaseAndDepartureDateAndPriceLessThan(
-            String destination, String departureDate, double price);
+            String destination, LocalDate departureDate, double price);
 
     List<Flight> findByDestinationIgnoreCaseAndDepartureDate(
-            String destination, String departureDate);
+            String destination, LocalDate departureDate);
 
     List<Flight> findByDestinationIgnoreCase(String destination);
 
     List<Flight> findByDestinationIgnoreCaseAndDepartureDateAndFlightTime(
-            String destination, String departureDate, String flightTime);
+            String destination, LocalDate departureDate, LocalTime flightTime);
 
     List<Flight> findByDestinationIgnoreCaseAndDepartureDateAndFlightTimeAndPriceLessThan(
-            String destination, String departureDate, String flightTime, Double price);
+            String destination, LocalDate departureDate, LocalTime flightTime, Double price);
 }
