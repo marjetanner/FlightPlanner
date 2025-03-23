@@ -14,4 +14,12 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     List<Flight> findByDestinationIgnoreCaseAndDepartureDate(
             String destination, String departureDate);
+
+    List<Flight> findByDestinationIgnoreCase(String destination);
+
+    List<Flight> findByDestinationIgnoreCaseAndDepartureDateAndFlightTime(
+            String destination, String departureDate, String flightTime);
+
+    List<Flight> findByDestinationIgnoreCaseAndDepartureDateAndFlightTimeAndPriceLessThan(
+            String destination, String departureDate, String flightTime, Double price);
 }

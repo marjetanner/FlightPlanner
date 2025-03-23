@@ -2,6 +2,7 @@ package ee.cgi.flightplanner.controller;
 
 import ee.cgi.flightplanner.entity.Flight;
 import ee.cgi.flightplanner.service.FlightService;
+import ee.cgi.flightplanner.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,14 +12,39 @@ import java.util.List;
 @RequestMapping("/api/flights")
 public class FlightController {
 
-    @Autowired
-    private FlightService flightService;
+    private final FlightService flightService;
+    private final SeatService seatService;
 
-    // Lennu filtreerimine
+    @Autowired
+    public FlightController(FlightService flightService, SeatService seatService) {
+        this.flightService = flightService;
+        this.seatService = seatService;
+    }
+
+    // Kuvab kõik lennud
     @GetMapping
-    public List<Flight> getFlights(@RequestParam(required = false) String destination,
-                                   @RequestParam(required = false) String departureDate,
-                                   @RequestParam(required = false) double price) {
-        return flightService.getFilteredFlights(destination, departureDate, price);
+    public List<Flight> getAllFlights() {
+        return flightService.getAllFlights();
+    }
+
+    // Filtreerimine sihtkoha, kuupäeva, lennuaja ja hinna järgi
+    @GetMapping("/search")
+    public List<Flight> getFilteredFlights(
+            @RequestParam(required = false) String destination,
+            @RequestParam(required = false) String departureDate,
+            @RequestParam(required = false) String flightTime,
+            @RequestParam(required = false) Double price) {
+        return flightService.getFilteredFlights(destination, departureDate, flightTime, price);
+    }
+
+    // Istekohtade soovitamine
+    @GetMapping("/{flightId}/seats")
+    public List<String> recommendSeats(
+            @PathVariable Long flightId,
+            @RequestParam int passengerCount,
+            @RequestParam(required = false) Boolean windowSeat,
+            @RequestParam(required = false) Boolean extraLegroom,
+            @RequestParam(required = false) Boolean nearExit) {
+        return seatService.recommendSeats(flightId, passengerCount, windowSeat, extraLegroom, nearExit);
     }
 }
